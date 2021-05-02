@@ -20,6 +20,10 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Long getId(){
+        return this.id;
+    }
+
     @Column(nullable = false)
     private String firstName;
 
