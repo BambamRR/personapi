@@ -1,6 +1,8 @@
 package one.digitalinnovation.personapi.controller;
 
+import jakarta.validation.Valid;
 import one.digitalinnovation.personapi.PersonapiApplication;
+import one.digitalinnovation.personapi.dto.request.PersonDTO;
 import one.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personapi.entity.Person;
 import one.digitalinnovation.personapi.repository.PersonRepository;
@@ -10,12 +12,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/people")
 public class PersonController {
+
+   PersonRepository personRepository;
 
     private PersonService personService;
 
@@ -24,10 +28,17 @@ public class PersonController {
         this.personService = personService;
     }
 
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createPerson(@RequestBody Person person) {
-        return personService.createPerson(person);
+    public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
+        return personService.createPerson(personDTO);
+    }
+
+    @GetMapping
+    public List<PersonDTO> listAll(){
+       return personService.listAll();
     }
 
 
